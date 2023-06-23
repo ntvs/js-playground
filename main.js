@@ -25,7 +25,9 @@ function sequentialRender(spriteArray, context2d) {
 async function main() {
     const FRAMERATE = 30; //Target frames per second
     const TARGET = 1000/FRAMERATE; //target frame duration, in milliseconds
-    let delta = 1;
+    let delta = 1; //initial delta time if needed
+
+    const X_OFFSET = 8; //x offset in px, used to center 32x32px sprite 
 
     //Canvas
     const canvas = document.querySelector("canvas");
@@ -34,7 +36,7 @@ async function main() {
     //Initialize sprites/layers
     let sprites = [
         new Sprite("./assets/backgrounds/debug_2.png", false, {x: 0, y: 0}, true), // 0: background
-        new Sprite("./assets/characters/debug.png", true, {x: 8+(16*6), y: 0+(16*5)}, true), // 1: character
+        new Sprite("./assets/characters/debug.png", true, {x: X_OFFSET+(16*6), y: 0+(16*5)}, true), // 1: character
         new Sprite("./assets/environment/light_mask.png", false, {x: 0, y: 0}, true), // 2: light map
         new Sprite("./assets/environment/watermark.png", false, {x: 0, y: 0}, true) // 3: demo watermark
     ];
@@ -42,13 +44,18 @@ async function main() {
 
     let char = new Character(sprites[1], context2d, {speed: 2});
 
-    let keyboard = new KeyboardSync(window, false);
+    //let keyboard = new KeyboardSync(window, false);
+    let keyboard = new Keyboard(window, false);
     
     while (true) {
         let starTime = Date.now(); //Time at start of execution
 
         //execution here
-        char.move(keyboard.DIRECTION, delta);
+        //char.move(keyboard.DIRECTION, delta);
+        let inputVector = keyboard.getInputVector();
+        sprites[1].position.x += inputVector.x;
+        sprites[1].position.y += inputVector.y;
+        console.log({charSprite: sprites[1].position, inputVector});
         
         sequentialRender(sprites, context2d);
 
