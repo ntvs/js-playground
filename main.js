@@ -1,3 +1,9 @@
+//Constants
+const FRAMERATE = 30; //Target frames per second
+const TARGET = 1000/FRAMERATE; //Target frame duration, in milliseconds
+const X_OFFSET = 8; //X offset in px, used to center 32x32px sprite 
+const TILE_SIZE = 16; //Size of a tile on the grid in px
+
 //Javascript sleep implemented with promises
 function sleep(n) {
     return new Promise((resolve, reject) => {
@@ -21,13 +27,28 @@ function sequentialRender(spriteArray, context2d) {
     });
 }
 
+function handlePlayerMovement(char, keyboard) {
+    let inputVector = keyboard.getInputVector();
+
+    //normalization hack
+    if (inputVector.x !== 0 && inputVector.y !== 0) {
+        inputVector = {x: inputVector.x * 0.5, y: inputVector.y * 0.5};
+    }
+    
+    //If the character is already moving, keep moving him until hes back on the grid
+    if (char.isMoving() && ((char.sprite.position.x-X_OFFSET) % TILE_SIZE !== 0) || (char.sprite.position.y) % TILE_SIZE !== 0) {
+        char.move(char.getDirection());
+    }
+
+    //If he's on the grid, regardless of if he's moving or not, we can receive new input
+    else if (((char.sprite.position.x-X_OFFSET) % TILE_SIZE == 0) || (char.sprite.position.y) % TILE_SIZE == 0) {
+        char.move(inputVector);
+    }
+}
+
 //Main function
 async function main() {
-    const FRAMERATE = 30; //Target frames per second
-    const TARGET = 1000/FRAMERATE; //target frame duration, in milliseconds
-    let delta = 1; //initial delta time if needed
-
-    const X_OFFSET = 8; //x offset in px, used to center 32x32px sprite 
+    let delta = 1; //Initial delta time if needed
 
     //Canvas
     const canvas = document.querySelector("canvas");
@@ -51,11 +72,7 @@ async function main() {
         let starTime = Date.now(); //Time at start of execution
 
         //execution here
-        //char.move(keyboard.DIRECTION, delta);
-        let inputVector = keyboard.getInputVector();
-        sprites[1].position.x += inputVector.x;
-        sprites[1].position.y += inputVector.y;
-        console.log({charSprite: sprites[1].position, inputVector});
+        handlePlayerMovement(char, keyboard);
         
         sequentialRender(sprites, context2d);
 
