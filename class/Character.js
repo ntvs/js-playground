@@ -13,7 +13,7 @@ class Character {
     tileWidth;
 
     #moving = false;
-    #direction = "";
+    #direction;
     #finalPosition;
 
     constructor(sprite, context2d, options) {
@@ -25,53 +25,24 @@ class Character {
         this.tileWidth = options.tileWidth || defaults.tileWidth;
     }
 
-    move(direction, delta) {
-        //console.log(this.#direction, this.#moving, this.sprite.position, this.#finalPosition);
-        if (!this.#moving) {
-            if (direction == "UP") {
-                this.#moving = true;
-                this.#finalPosition = {x: this.sprite.position.x, y: this.sprite.position.y - this.tileWidth};
-                this.#direction = "UP";
-                this.sprite.position.y -= (this.speed);
-
-            } else if (direction == "DOWN") {
-                this.#moving = true;
-                this.#finalPosition = {x: this.sprite.position.x, y: this.sprite.position.y + this.tileWidth};
-                this.#direction = "DOWN";
-                this.sprite.position.y += (this.speed);
-
-            } else if (direction == "LEFT") {
-                this.#moving = true;
-                this.#finalPosition = {x: this.sprite.position.x - this.tileWidth, y: this.sprite.position.y};
-                this.#direction = "LEFT";
-                this.sprite.position.x -= (this.speed);
-
-            } else if (direction == "RIGHT") {
-                this.#moving = true;
-                this.#finalPosition = {x: this.sprite.position.x + this.tileWidth, y: this.sprite.position.y};
-                this.#direction = "RIGHT";
-                this.sprite.position.x += (this.speed);
-
-            }
-        }
+    move(direction) {
+        //If the direction received was 0 and the character isn't moving, there's no reason to do anything else
+        if ((direction.x == 0 && direction.y == 0) && !this.#moving) return;
         
-        //issue here
-        else if (this.sprite.position.x == this.#finalPosition.x && this.sprite.position.y == this.#finalPosition.y) {
+        //If the newly input direction is 0, set the state to no longer moving
+        if (direction.x == 0 && direction.y == 0) {
             this.#moving = false;
-            this.#direction = "";
-        } 
-        
-        else {
-            if (this.#direction == "UP") {
-                this.sprite.position.y -= (this.speed);
-            } else if (this.#direction == "DOWN") {
-                this.sprite.position.y += (this.speed);
-            } else if (this.#direction == "LEFT") {
-                this.sprite.position.x -= (this.speed);
-            } else if (this.#direction == "RIGHT") {
-                this.sprite.position.x += (this.speed);
-            }
+        } else {
+            this.#moving = true;
+            this.#direction = direction;
+            this.sprite.position.x += direction.x * this.speed;
+            this.sprite.position.y += direction.y * this.speed;
         }
+    }
+
+    //accessors
+    getDirection() {
+        return this.#direction;
     }
 
     //Boolean methods
