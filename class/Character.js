@@ -12,9 +12,9 @@ class Character {
     speed;
     tileWidth;
 
+    //Private members
     #moving = false;
     #direction;
-    #finalPosition;
 
     constructor(sprite, context2d, options) {
         //must be an initialized sprite
