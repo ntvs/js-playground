@@ -7,6 +7,7 @@ const TILE_SIZE = 16; //Size of a tile on the grid in px
 const COL_MAP = [[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,false,false,false,false,false,false,false,false,false,false,false,true,true],[true,false,false,false,false,false,false,false,false,false,false,false,false,false,true],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]];
 
 //Audio state
+let SFX_VOLUME = 0.75;
 let SFX_PLAYING = false;
 
 //Javascript sleep implemented with promises
@@ -30,6 +31,19 @@ function sequentialRender(spriteArray, context2d) {
     spriteArray.forEach(sprite => {
         sprite.render(context2d);
     });
+}
+
+//Audio - play sound effect
+function playSoundEffect(sfxPath) {
+    if (!SFX_PLAYING) {
+        SFX_PLAYING = true;
+        let player = new Audio(sfxPath);
+        player.volume = SFX_VOLUME;
+        player.addEventListener("ended", () => {
+            SFX_PLAYING = false;
+        });
+        player.play();       
+    }
 }
 
 //Accepts unormalized input
@@ -72,17 +86,7 @@ function handlePlayerMovement(char, keyboard) {
         if (canMove) char.move(inputVector);
         
         //Play bump sfx when the player can't move
-        else { 
-            if (!SFX_PLAYING) {
-                SFX_PLAYING = true;
-                let player = new Audio("./assets/sfx/bump.wav");
-                player.volume = 0.75;
-                player.addEventListener("ended", () => {
-                    SFX_PLAYING = false;
-                });
-                player.play();
-            }
-        }
+        else playSoundEffect("./assets/sfx/bump.wav");
     }
 }
 
