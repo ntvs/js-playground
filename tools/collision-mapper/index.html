@@ -27,8 +27,14 @@
         }
 
         .grid > * > button {
-            margin: 1rem;
+            /*Old css*/
+            /* margin: 1rem;
+            opacity: 0; */
+
+            height: 3rem;
+            width: 100%;
             opacity: 0;
+            cursor: pointer;
         }
 
         .grid > * {
@@ -109,7 +115,7 @@
         for (let y = 0; y < ROWS; y++) {
             for (let x = 0; x < COLS; x++) {
                 if (state[y][x]) document.getElementById(`${x}_${y}`).parentNode.style.backgroundColor = "black";
-                else document.getElementById(`${x}_${y}`).parentNode.style.backgroundColor = "transparent";
+                else document.getElementById(`${x}_${y}`).parentNode.style.backgroundColor = "";
             }
         }
     }
@@ -118,7 +124,7 @@
         let x = e.target.id.split("_")[0];
         let y = e.target.id.split("_")[1];
 
-        if (state[y][x]) e.target.parentNode.style.backgroundColor = "transparent";
+        if (state[y][x]) e.target.parentNode.style.backgroundColor = "";
         else e.target.parentNode.style.backgroundColor = "black";
 
         state[y][x] = !state[y][x];
