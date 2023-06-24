@@ -70,7 +70,9 @@ function handlePlayerMovement(char, keyboard) {
         //Upon receiving new input, check if the player may move to that position
         let canMove = handleRoomCollisions(char, keyboard.getInputVector());
         if (canMove) char.move(inputVector);
-        else { //play bump sfx when the player can't move
+        
+        //Play bump sfx when the player can't move
+        else { 
             if (!SFX_PLAYING) {
                 SFX_PLAYING = true;
                 let player = new Audio("./assets/sfx/bump.wav");
