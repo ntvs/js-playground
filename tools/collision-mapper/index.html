@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collision Mapper</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            border: 0.2rem solid #bbb;
+
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            grid-gap: 5px;
+        }
+
+        .grid > * > button {
+            margin: 1rem;
+        }
+
+        .actions > * {
+            display: block;
+        }
+
+        .actions > *+*, .grid {
+            margin-top: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="grid">
+        </div>
+
+        <div class="actions">
+            <h1>Actions</h1>
+            <button onclick="renderCollisionArray(event)">EXPORT</button>
+            <button onclick="loadCollisionArray(event)">IMPORT</button>
+            <textarea placeholder="Collision array text data. Data must be 15x10 array." id="colData" cols="30" rows="10"></textarea>
+        </div>
+    </div>
+</body>
+
+<script>
+    const ROWS = 10;
+    const COLS = 15;
+    const colData = document.querySelector("#colData");
+
+    let state = [
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    ];
+
+    window.onload = () => {
+
+        let grid = document.querySelector(".grid");
+        //console.log(grid);
+
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                let div = document.createElement("div");
+                let btn = document.createElement("button");
+                btn.innerText = "Tile";
+                btn.id = x+"_"+y;
+
+                btn.setAttribute("onclick", "toggleTile(event)");
+
+                div.appendChild(btn);
+                
+                grid.appendChild(div);
+            }
+        }
+    }
+
+    function updateVisualTable() {
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                if (state[y][x]) document.getElementById(`${x}_${y}`).parentNode.style.backgroundColor = "black";
+                else document.getElementById(`${x}_${y}`).parentNode.style.backgroundColor = "transparent";
+            }
+        }
+    }
+
+    function toggleTile(e) {
+        let x = e.target.id.split("_")[0];
+        let y = e.target.id.split("_")[1];
+
+        if (state[y][x]) e.target.parentNode.style.backgroundColor = "transparent";
+        else e.target.parentNode.style.backgroundColor = "black";
+
+        state[y][x] = !state[y][x];
+
+        console.log(state[y][x], {x, y}, e.target);
+    } 
+
+    function renderCollisionArray(e) {
+        //console.log(JSON.stringify(state));
+        colData.value = JSON.stringify(state);
+    }
+
+    function loadCollisionArray(e) {
+        if (!colData.value) return;
+
+        state = JSON.parse(colData.value);
+        updateVisualTable();
+    }
+</script>
+
+</html>
