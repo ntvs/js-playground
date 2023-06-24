@@ -4,6 +4,8 @@ const TARGET = 1000/FRAMERATE; //Target frame duration, in milliseconds
 const X_OFFSET = 8; //X offset in px, used to center 32x32px sprite 
 const TILE_SIZE = 16; //Size of a tile on the grid in px
 
+const COL_MAP = [[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,false,false,false,false,false,false,false,false,false,false,false,true,true],[true,false,false,false,false,false,false,false,false,false,false,false,false,false,true],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]];
+
 //Javascript sleep implemented with promises
 function sleep(n) {
     return new Promise((resolve, reject) => {
@@ -27,6 +29,25 @@ function sequentialRender(spriteArray, context2d) {
     });
 }
 
+//Accepts unormalized input
+function handleRoomCollisions(char, inputVector) {
+    //Obtain character tile position + 1 to synchronize to collision array
+    let col = ((char.sprite.position.x-X_OFFSET) / TILE_SIZE) + 1;
+    let row = ((char.sprite.position.y) / TILE_SIZE) + 1;
+
+    //Determine future tile position with un normalized input
+    let futurePosition = {x: col+inputVector.x, y: row+inputVector.y};
+
+    //If the future position will be OOB, do not allow the player to move
+    if ((futurePosition.y >= COL_MAP.length || futurePosition.x >= COL_MAP[0].length) || futurePosition.y < 0 || futurePosition.x < 0) return false;
+    
+    //If the player's future position is not free, do not allow the player to move
+    if (COL_MAP[row+inputVector.y][col+inputVector.x]) return false;
+
+    //Otherwise, the player may move if the next spot is free
+    return true;
+}
+
 function handlePlayerMovement(char, keyboard) {
     let inputVector = keyboard.getInputVector();
 
@@ -42,7 +63,10 @@ function handlePlayerMovement(char, keyboard) {
 
     //If he's on the grid, regardless of if he's moving or not, we can receive new input
     else if (((char.sprite.position.x-X_OFFSET) % TILE_SIZE == 0) || (char.sprite.position.y) % TILE_SIZE == 0) {
-        char.move(inputVector);
+
+        //Upon receiving new input, check if the player may move to that position
+        let canMove = handleRoomCollisions(char, keyboard.getInputVector());
+        if (canMove) char.move(inputVector);
     }
 }
 
@@ -73,7 +97,6 @@ async function main() {
 
         //execution here
         handlePlayerMovement(char, keyboard);
-        
         sequentialRender(sprites, context2d);
 
         delta = Date.now() - starTime; //Change in time between beginning of execution to the end
