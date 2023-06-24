@@ -6,6 +6,9 @@ const TILE_SIZE = 16; //Size of a tile on the grid in px
 
 const COL_MAP = [[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,false,false,false,false,false,false,false,false,false,false,false,true,true],[true,false,false,false,false,false,false,false,false,false,false,false,false,false,true],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]];
 
+//Audio state
+let SFX_PLAYING = false;
+
 //Javascript sleep implemented with promises
 function sleep(n) {
     return new Promise((resolve, reject) => {
@@ -67,6 +70,17 @@ function handlePlayerMovement(char, keyboard) {
         //Upon receiving new input, check if the player may move to that position
         let canMove = handleRoomCollisions(char, keyboard.getInputVector());
         if (canMove) char.move(inputVector);
+        else { //play bump sfx when the player can't move
+            if (!SFX_PLAYING) {
+                SFX_PLAYING = true;
+                let player = new Audio("./assets/sfx/bump.wav");
+                player.volume = 0.75;
+                player.addEventListener("ended", () => {
+                    SFX_PLAYING = false;
+                });
+                player.play();
+            }
+        }
     }
 }
 
