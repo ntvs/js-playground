@@ -80,6 +80,19 @@
     const colData = document.querySelector("#colData");
     const grid = document.querySelector(".grid");
 
+    let defaultState = [
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+        [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    ];
+    
     let state = [
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
         [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -138,10 +151,13 @@
     }
 
     function loadCollisionArray(e) {
-        if (!colData.value) return;
-
-        state = JSON.parse(colData.value);
-        updateVisualTable();
+        if (!colData.value) {
+            state = defaultState;
+            updateVisualTable();
+        } else {
+            state = JSON.parse(colData.value);
+            updateVisualTable();
+        }
     }
 </script>
 
