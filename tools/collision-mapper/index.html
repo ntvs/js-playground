@@ -151,13 +151,14 @@
     }
 
     function loadCollisionArray(e) {
-        if (!colData.value) {
-            state = defaultState;
+        if (colData.value=="") {
+            state = JSON.parse(JSON.stringify(defaultState));
             updateVisualTable();
         } else {
             state = JSON.parse(colData.value);
             updateVisualTable();
         }
+        //console.log(colData.value, state);
     }
 </script>
 
