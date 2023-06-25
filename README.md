@@ -1,3 +1,3 @@
 # TODO
 - Player animations
-- Collisions
+- Collisions (Done?)
