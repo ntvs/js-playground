@@ -1,4 +1,4 @@
-const defaults = {
+const characterDefaults = {
     speed: 1,
     tileWidth: 16,
     position: {x: 0, y: 0}
@@ -21,8 +21,7 @@ class Character {
         this.sprite = sprite;
         this.context2d = context2d;
 
-        this.speed = options.speed || defaults.speed;
-        this.tileWidth = options.tileWidth || defaults.tileWidth;
+        this.speed = options.speed || characterDefaults.speed;
     }
 
     move(direction) {
