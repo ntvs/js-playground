@@ -101,7 +101,7 @@ async function main() {
     //Initialize sprites/layers
     let sprites = [
         new Sprite({src: "./assets/backgrounds/debug_2.png", tileSize: {x:240, y:160}}), // 0: background 
-        new Sprite({src: "./assets/characters/debug_sheet.png", position: {x: X_OFFSET+(16*6), y: 0+(16*5)}, castsShadow: true}), // 1: player character 
+        new Sprite({src: "./assets/characters/debug_sheet.png", position: {x: X_OFFSET+(16*6), y: 0+(16*5)}, castsShadow: true, offset: {x: 0, y: 0}}), // 1: player character 
         new Sprite({src: "./assets/environment/light_mask.png", tileSize: {x:240, y:160}}), // 2: light map 
         new Sprite({src: "./assets/environment/watermark.png", tileSize: {x:240, y:160}}), // 3: demo watermark 
 
@@ -109,7 +109,20 @@ async function main() {
 
     initSprites(sprites);
 
-    let char = new Character(sprites[1], context2d, {speed: 2});
+    //Define character animations (eventually move it to a file?)
+    let character_anims = {
+        "idle": [{"duration": 1, "position": {"x": 0, "y": 0}}],
+        "down": [{"duration": 1, "position": {"x": 0, "y": 0}}],
+        "up": [{"duration": 1, "position": {"x": 0, "y": 1}}],
+        "left": [{"duration": 1, "position": {"x": 0, "y": 2}}],
+        "right": [{"duration": 1, "position": {"x": 0, "y": 3}}],
+        "down_left": [{"duration": 1, "position": {"x": 0, "y": 4}}],
+        "down_right": [{"duration": 1, "position": {"x": 0, "y": 5}}],
+        "up_left": [{"duration": 1, "position": {"x": 0, "y": 6}}],
+        "up_right": [{"duration": 1, "position": {"x": 0, "y": 7}}]
+    };
+
+    let char = new Character(sprites[1], context2d, {speed: 2, animationPlayer: new AnimationPlayer({animations: character_anims})});
 
     //let keyboard = new KeyboardSync(window, false);
     let keyboard = new Keyboard(window, false);
