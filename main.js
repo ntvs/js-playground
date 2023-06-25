@@ -100,11 +100,13 @@ async function main() {
 
     //Initialize sprites/layers
     let sprites = [
-        new Sprite("./assets/backgrounds/debug_2.png", false, {x: 0, y: 0}, true), // 0: background
-        new Sprite("./assets/characters/debug.png", true, {x: X_OFFSET+(16*6), y: 0+(16*5)}, true), // 1: character
-        new Sprite("./assets/environment/light_mask.png", false, {x: 0, y: 0}, true), // 2: light map
-        new Sprite("./assets/environment/watermark.png", false, {x: 0, y: 0}, true) // 3: demo watermark
+        new Sprite({src: "./assets/backgrounds/debug_2.png", tileSize: {x:240, y:160}}), // 0: background 
+        new Sprite({src: "./assets/characters/debug_sheet.png", position: {x: X_OFFSET+(16*6), y: 0+(16*5)}, castsShadow: true}), // 1: player character 
+        new Sprite({src: "./assets/environment/light_mask.png", tileSize: {x:240, y:160}}), // 2: light map 
+        new Sprite({src: "./assets/environment/watermark.png", tileSize: {x:240, y:160}}), // 3: demo watermark 
+
     ];
+
     initSprites(sprites);
 
     let char = new Character(sprites[1], context2d, {speed: 2});
