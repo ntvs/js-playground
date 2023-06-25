@@ -6,7 +6,7 @@ const template_Animations = {
     "walkUp": "more animations here..."
 }; 
 
-const defaults = {
+const animationDefaults = {
     animations: {}
 };
 
@@ -19,7 +19,7 @@ class AnimationPlayer {
     #currentFrame;
 
     constructor(options) {
-        this.#animations = options.animations || defaults.animations;
+        this.#animations = options.animations || Object.create(animationDefaults.animations);
 
         this.#currentAnimation = 0;
         this.#currentAnimationSlot = 0;
@@ -27,6 +27,8 @@ class AnimationPlayer {
     }
 
     playAnimation(animationName) {
+        //console.log(this.#currentAnimation, this.#currentAnimationSlot, this.#currentFrame);
+        
         //If the passed animation name does not match the one that's playing, start the new one
         if (animationName !== this.#currentAnimation) {
             this.#currentAnimation = animationName;
@@ -62,5 +64,8 @@ class AnimationPlayer {
     }
     getCurrentFrame() {
         return this.#currentFrame;
+    }
+    getAnimations() {
+        return this.#animations; //read animation list
     }
 }
