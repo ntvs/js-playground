@@ -26,7 +26,7 @@ class Character {
         this.#animationPlayer = options.animationPlayer || new AnimationPlayer({});
     }
 
-    move(direction) {
+    move(direction, canMove) {
         //If the direction received was 0 and the character isn't moving, there's no reason to do anything else
         //console.log(direction);
         if ((direction.x == 0 && direction.y == 0) && !this.#moving) {
@@ -42,8 +42,12 @@ class Character {
         } else {
             this.#moving = true;
             this.#direction = direction;
-            this.sprite.position.x += direction.x * this.speed;
-            this.sprite.position.y += direction.y * this.speed;
+            
+            //Only update the sprite position if the character can move. However, the character should be animated and the direction updated regardless
+            if (canMove) {
+                this.sprite.position.x += direction.x * this.speed;
+                this.sprite.position.y += direction.y * this.speed;
+            }
 
             //direction-based animations
             if (direction.x == 0 && direction.y == 1) this.#animationPlayer.playAnimation("down");
