@@ -109,18 +109,8 @@ async function main() {
 
     initSprites(sprites);
 
-    //Define character animations (eventually move it to a file?)
-    let character_anims = {
-        "idle": [{"duration": 1, "position": {"x": 0, "y": 0}}],
-        "down": [{"duration": 1, "position": {"x": 0, "y": 0}}],
-        "up": [{"duration": 1, "position": {"x": 0, "y": 1}}],
-        "left": [{"duration": 1, "position": {"x": 0, "y": 2}}],
-        "right": [{"duration": 1, "position": {"x": 0, "y": 3}}],
-        "down_left": [{"duration": 1, "position": {"x": 0, "y": 4}}],
-        "down_right": [{"duration": 1, "position": {"x": 0, "y": 5}}],
-        "up_left": [{"duration": 1, "position": {"x": 0, "y": 6}}],
-        "up_right": [{"duration": 1, "position": {"x": 0, "y": 7}}]
-    };
+    //Load character animations
+    let character_anims = await fetch("./assets/anims/char.json").then(res => res.json());
 
     let char = new Character(sprites[1], context2d, {speed: 2, animationPlayer: new AnimationPlayer({animations: character_anims})});
 
