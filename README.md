@@ -1,5 +1,5 @@
 # TODO
-- ...
+- Menus/popups
 
 # DONE
 - Player movement
