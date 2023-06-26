@@ -38,7 +38,7 @@ class AnimationPlayer {
         }
         
         else {
-            if (this.#currentFrame <= this.#currentAnimationSlot.duration ) {
+            if (this.#currentFrame <= this.#animations[this.#currentAnimation][this.#currentAnimationSlot].duration ) {
                 this.#currentFrame++;
             }
 
