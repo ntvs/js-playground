@@ -75,7 +75,7 @@ function handlePlayerMovement(char, keyboard) {
     
     //If the character is already moving, keep moving him until hes back on the grid
     if (char.isMoving() && ((char.sprite.position.x-X_OFFSET) % TILE_SIZE !== 0) || (char.sprite.position.y) % TILE_SIZE !== 0) {
-        char.move(char.getDirection());
+        char.move(char.getDirection(), true);
     }
 
     //If he's on the grid, regardless of if he's moving or not, we can receive new input
@@ -83,10 +83,10 @@ function handlePlayerMovement(char, keyboard) {
 
         //Upon receiving new input, check if the player may move to that position
         let canMove = handleRoomCollisions(char, keyboard.getInputVector());
-        if (canMove) char.move(inputVector);
+        char.move(inputVector, canMove);
         
         //Play bump sfx when the player can't move
-        else playSoundEffect("./assets/sfx/bump.wav");
+        if (!canMove) playSoundEffect("./assets/sfx/bump.wav");
     }
 }
 
