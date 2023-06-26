@@ -1,0 +1,51 @@
+{
+    "idle": [{"duration": 1, "position": {"x": 0, "y": 0}}],
+    "down": [
+        {"duration": 10, "position": {"x": 0, "y": 0}},
+        {"duration": 10, "position": {"x": 1, "y": 0}},
+        {"duration": 10, "position": {"x": 2, "y": 0}},
+        {"duration": 10, "position": {"x": 3, "y": 0}}
+    ],
+    "up": [
+        {"duration": 10, "position": {"x": 0, "y": 1}},
+        {"duration": 10, "position": {"x": 1, "y": 1}},
+        {"duration": 10, "position": {"x": 2, "y": 1}},
+        {"duration": 10, "position": {"x": 3, "y": 1}}
+    ],
+    "left": [
+        {"duration": 10, "position": {"x": 0, "y": 2}},
+        {"duration": 10, "position": {"x": 1, "y": 2}},
+        {"duration": 10, "position": {"x": 2, "y": 2}},
+        {"duration": 10, "position": {"x": 3, "y": 2}}
+    ],
+    "right": [
+        {"duration": 10, "position": {"x": 0, "y": 3}},
+        {"duration": 10, "position": {"x": 1, "y": 3}},
+        {"duration": 10, "position": {"x": 2, "y": 3}},
+        {"duration": 10, "position": {"x": 3, "y": 3}}
+    ],
+    "down_left": [
+        {"duration": 4, "position": {"x": 0, "y": 4}},
+        {"duration": 4, "position": {"x": 1, "y": 4}},
+        {"duration": 4, "position": {"x": 2, "y": 4}},
+        {"duration": 4, "position": {"x": 3, "y": 4}}
+    ],
+    "down_right": [
+        {"duration": 4, "position": {"x": 0, "y": 5}},
+        {"duration": 4, "position": {"x": 1, "y": 5}},
+        {"duration": 4, "position": {"x": 2, "y": 5}},
+        {"duration": 4, "position": {"x": 3, "y": 5}}
+    ],
+    "up_left": [
+        {"duration": 4, "position": {"x": 0, "y": 6}},
+        {"duration": 4, "position": {"x": 1, "y": 6}},
+        {"duration": 4, "position": {"x": 2, "y": 6}},
+        {"duration": 4, "position": {"x": 3, "y": 6}}
+    ],
+    "up_right": [
+        {"duration": 4, "position": {"x": 0, "y": 7}},
+        {"duration": 4, "position": {"x": 1, "y": 7}},
+        {"duration": 4, "position": {"x": 2, "y": 7}},
+        {"duration": 4, "position": {"x": 3, "y": 7}}
+    ]
+}
