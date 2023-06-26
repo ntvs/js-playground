@@ -4,7 +4,8 @@ const TARGET = 1000/FRAMERATE; //Target frame duration, in milliseconds
 const X_OFFSET = 8; //X offset in px, used to center 32x32px sprite 
 const TILE_SIZE = 16; //Size of a tile on the grid in px
 
-const COL_MAP = [[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[true,true,false,false,false,false,false,false,false,false,false,false,false,true,true],[true,false,false,false,false,false,false,false,false,false,false,false,false,false,true],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false]];
+//Room collisions
+let COL_MAP;
 
 //Audio state
 let SFX_VOLUME = 0.75;
@@ -104,13 +105,14 @@ async function main() {
         new Sprite({src: "./assets/characters/debug_sheet.png", position: {x: X_OFFSET+(16*6), y: 0+(16*5)}, castsShadow: true, offset: {x: 0, y: 0}}), // 1: player character 
         new Sprite({src: "./assets/environment/light_mask.png", tileSize: {x:240, y:160}}), // 2: light map 
         new Sprite({src: "./assets/environment/watermark.png", tileSize: {x:240, y:160}}), // 3: demo watermark 
-
     ];
 
     initSprites(sprites);
 
     //Load character animations
     let character_anims = await fetch("./assets/anims/char.json").then(res => res.json());
+    //Load room collisions
+    COL_MAP = await fetch("./assets/col/room.json").then(res => res.json());
 
     let char = new Character(sprites[1], context2d, {speed: 2, animationPlayer: new AnimationPlayer({animations: character_anims})});
 
