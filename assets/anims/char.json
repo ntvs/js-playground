@@ -1,5 +1,7 @@
 {
-    "idle": [{"duration": 1, "position": {"x": 0, "y": 0}}],
+    "idle": [
+        {"duration": 1, "position": {"x": 0, "y": 0}}
+    ],
     "down": [
         {"duration": 10, "position": {"x": 0, "y": 0}},
         {"duration": 10, "position": {"x": 1, "y": 0}},
