@@ -36,8 +36,17 @@ class Sprite {
         this.offset = options.offset || Object.create(spriteDefaults.offset);
         this.tileSize = options.tileSize || Object.create(spriteDefaults.tileSize);
 
-        this.enabled = options.enabled || spriteDefaults.enabled;
-        this.castsShadow = options.castsShadow || spriteDefaults.castsShadow;
+        if ("enabled" in options) {
+            this.enabled = options.enabled;
+        } else {
+            this.enabled = spriteDefaults.enabled;
+        }
+
+        if ("castsShadow" in options) {
+            this.castsShadow = options.castsShadow;
+        } else {
+            this.castsShadow = spriteDefaults.castsShadow;
+        }
     }
 
     //actually this is pointless and doesn't work as intended 🥲
