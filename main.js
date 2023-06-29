@@ -101,9 +101,9 @@ async function main() {
 
     //Initialize sprites/layers
     let sprites = [
-        new Sprite({src: "./assets/backgrounds/debug_2.png", tileSize: {x:240, y:160}}), // 0: background 
+        new Sprite({src: "./assets/backgrounds/room.png", tileSize: {x:240, y:160}}), // 0: background 
         new Sprite({src: "./assets/characters/debug_sheet.png", position: {x: X_OFFSET+(16*6), y: 0+(16*5)}, castsShadow: true, offset: {x: 0, y: 0}}), // 1: player character 
-        new Sprite({src: "./assets/environment/light_mask.png", tileSize: {x:240, y:160}}), // 2: light map 
+        new Sprite({src: "./assets/environment/light_mask.png", tileSize: {x:240, y:160}, enabled: false}), // 2: light map 
         new Sprite({src: "./assets/environment/watermark.png", tileSize: {x:240, y:160}}), // 3: demo watermark 
     ];
 
@@ -112,7 +112,7 @@ async function main() {
     //Load character animations
     let character_anims = await fetch("./assets/anims/char.json").then(res => res.json());
     //Load room collisions
-    COL_MAP = await fetch("./assets/col/room.json").then(res => res.json());
+    COL_MAP = await fetch("./assets/col/room2.json").then(res => res.json());
 
     let char = new Character(sprites[1], context2d, {speed: 2, animationPlayer: new AnimationPlayer({animations: character_anims})});
 
